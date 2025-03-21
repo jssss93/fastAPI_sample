@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
     # 서버 설정
     HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    PORT: int = 3000
 
     # 기타 설정
     RELOAD: bool = True
