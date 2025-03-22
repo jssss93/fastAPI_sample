@@ -8,3 +8,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 CMD ["python", "-m", "app.main"]
+#docker build -t cjs0533/fastapi:v1.1 .
+#docker push cjs0533/fastapi:v1.1

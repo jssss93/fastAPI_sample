@@ -128,6 +128,16 @@ async def root():
         }
     }
 
+@app.get("/root")
+async def read_root():
+    # 가능한 가장 간단한 응답
+    return {"status": "ok"}
+
+# 단순 JSON 객체 반환 (경로 매개변수 없음)
+@app.get("/simple")
+async def simple_response():
+    return {"message": "Hello, World!"}
+
 # 라우터 등록
 app.include_router(users.router, prefix=settings.API_PREFIX)
 app.include_router(items.router, prefix=settings.API_PREFIX)
@@ -149,4 +159,4 @@ if __name__ == "__main__":
         loop="uvloop",
         timeout_keep_alive=10  # 연결 유지 타임아웃(초)
     )
-    #uvicorn app.main:app --reload --log-level warning
+    #uvicorn app.main:app --workers 3 --reload --log-level warning
