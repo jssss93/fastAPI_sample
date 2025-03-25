@@ -4,7 +4,7 @@ from typing import List
 from app.models.schemas import User, UserCreate, UserBase
 from app.core.logger import CommonLogger
 from app.api.deps import users_db
-
+from app.core.cache.decorators import cached
 # 글로벌 변수
 user_id_counter = 1
 logger = CommonLogger()
@@ -50,6 +50,7 @@ async def create_user(user: UserCreate):
 
 @router.get("/", response_model=List[User])
 @logger.log_execution_time
+@cached(expire=30, prefix="read_users")
 async def read_users(skip: int = 0, limit: int = 100):
     logger.debug(f"Fetching users with skip={skip}, limit={limit}")
     users = list(users_db.values())[skip:skip+limit]
@@ -58,6 +59,7 @@ async def read_users(skip: int = 0, limit: int = 100):
 
 @router.get("/{user_id}", response_model=User)
 @logger.log_execution_time
+@cached(expire=30, prefix="read_user")
 async def read_user(user_id: int = Path(..., gt=0)):
     logger.debug(f"Fetching user with ID: {user_id}")
 

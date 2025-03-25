@@ -2,6 +2,13 @@ import os
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
+# Redis 설정
+REDIS_URL = os.getenv("REDIS_URL", "redis://:0l7idGeXJu@localhost:6379/0")
+
+# 캐시 설정
+DEFAULT_CACHE_TTL = int(os.getenv("DEFAULT_CACHE_TTL", "300"))  # 기본 5분
+USER_CACHE_TTL = int(os.getenv("USER_CACHE_TTL", "600"))  # 사용자 캐시 10분
+
 class Settings(BaseSettings):
     # 애플리케이션 정보
     APP_NAME: str = "FastAPI Example"
@@ -9,7 +16,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # 로깅 설정
-    LOG_LEVEL: str = "INFO"
+    LOG_LEVEL: str = "DEBUG"
     LOG_FILE: str = "logs/app.log"
 
     # 서버 설정
